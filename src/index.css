@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent-green: #4ADE80;
+  --accent-violet: #8B5CF6;
+}
+
+body {
+  @apply bg-dark-bg text-white;
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-green to-accent-violet;
+}
+
+.glow {
+  text-shadow: 0 0 10px var(--accent-green);
+}
+
+.glow-violet {
+  text-shadow: 0 0 10px var(--accent-violet);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-dark-bg;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-accent-green to-accent-violet rounded-full;
+}
+
+/* Button hover effects */
+.btn-hover-effect {
+  @apply relative overflow-hidden;
+}
+
+.btn-hover-effect::after {
+  content: '';
+  @apply absolute inset-0 bg-white/20 transform -translate-x-full transition-transform duration-300;
+}
+
+.btn-hover-effect:hover::after {
+  @apply translate-x-0;
+}
+
+/* Loading animation keyframes */
+@keyframes morphing {
+  0% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+  50% {
+    border-radius: 30% 60% 70% 40%/50% 60% 30% 60%;
+  }
+  100% {
+    border-radius: 60% 40% 30% 70%/60% 30% 70% 40%;
+  }
+}
+
+.animate-morphing {
+  animation: morphing 8s ease-in-out infinite;
+}
+
+/* Card hover effects */
+.card-hover {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-green/20;
+}
+
+.card-hover-violet {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-violet/20;
+}
+
+/* Glassmorphism */
+.glass {
+  @apply bg-white/5 backdrop-blur-lg border border-white/10;
+}
+
+/* Animated background gradient */
+.animated-gradient {
+  background: linear-gradient(
+    45deg,
+    var(--accent-green),
+    var(--accent-violet),
+    var(--accent-green)
+  );
+  background-size: 200% 200%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
