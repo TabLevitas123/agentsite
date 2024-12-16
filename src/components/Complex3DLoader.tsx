@@ -153,11 +153,12 @@ const Complex3DLoader = () => {
   const edges = generateEdges(currentVertices);
 
   return (
-    <div className="fixed inset-y-0 right-0 w-1/2 flex items-center justify-center bg-black">
-      <div className="w-[600px] h-[600px] relative">
+    <div className="fixed inset-0 flex items-center justify-center bg-black">
+      <div className="w-[400px] h-[400px] relative">
         <svg 
-          viewBox="-100 -100 200 200" 
+          viewBox="-150 -150 300 300" 
           className="w-full h-full"
+          style={{ transform: 'translateY(-10%)' }}
         >
           {/* Inner connective lines */}
           {transformedPoints.map((point, i) => (

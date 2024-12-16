@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWeb3React } from '@web3-react/core';
 import { injected, getErrorMessage } from '../utils/web3';
+import XSwap from './XSwap';
 
 function LandingPage({ onLaunch }: { onLaunch: () => void }) {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showSwapModal, setShowSwapModal] = useState(false);
   const { activate, active, account } = useWeb3React();
 
   useEffect(() => {
@@ -108,16 +110,14 @@ function LandingPage({ onLaunch }: { onLaunch: () => void }) {
             </motion.button>
           )}
 
-          <motion.a
-            href="https://app.uniswap.org/#/swap"
-            target="_blank"
-            rel="noopener noreferrer"
+          <motion.button
+            onClick={() => setShowSwapModal(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-4 mt-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-xl font-bold shadow-lg shadow-purple-500/20"
+            className="px-12 py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-xl font-bold shadow-lg shadow-purple-500/20"
           >
-            BUY NOW ON  AI SWAP v2.0 
-          </motion.a>
+            Buy Now on Agent Swap v2.0
+          </motion.button>
         </motion.div>
 
         {active && account && (
@@ -130,6 +130,46 @@ function LandingPage({ onLaunch }: { onLaunch: () => void }) {
           </motion.div>
         )}
       </div>
+
+      {/* Swap Modal */}
+      <AnimatePresence>
+        {showSwapModal && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 flex items-center justify-center z-50"
+          >
+            <motion.div
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: 50, opacity: 0 }}
+              className="bg-dark-surface p-6 rounded-xl max-w-md w-full relative"
+            >
+              <button
+                onClick={() => setShowSwapModal(false)}
+                className="absolute top-2 right-2 text-gray-400 hover:text-gray-100"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+              <XSwap />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
