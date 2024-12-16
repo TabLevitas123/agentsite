@@ -158,6 +158,14 @@ function DappInterface() {
         <div className="flex flex-col mb-8">
           <div className="flex justify-between items-center mb-6">
             <h1 className="text-4xl font-bold gradient-text">AgentX Platform</h1>
+            <div className="flex space-x-4">
+              <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+                <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+              </a>
+              <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+                <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+              </a>
+            </div>
           </div>
           <div className="flex space-x-4">
             <motion.button
@@ -180,9 +188,10 @@ function DappInterface() {
                 activeTab === 'swap'
                   ? 'bg-gradient-to-r from-accent-green to-accent-violet'
                   : 'bg-dark-surface hover:bg-dark-surface/80'
-              }`}
+              } flex flex-col items-center`}
             >
-              Swap Tokens
+              <span>AGENT DEX</span>
+              <span className="text-sm">BUY $AGENTX NOW</span>
             </motion.button>
           </div>
         </div>
@@ -290,7 +299,7 @@ function DappInterface() {
             {/* Skills Selection Section */}
             <div className="mb-12 bg-dark-surface p-6 rounded-xl">
               <h2 className="text-2xl font-bold mb-6 text-accent-green">Select Skills</h2>
-
+              <p className="text-gray-400 mb-4">Each skill costs the equivalent of 20 USDT. Custom skill requests cost 100 USDT. Be inventive! Agents can accomplish almost anything as long as it's within the digital world.</p>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
                 {PREDEFINED_SKILLS.map((skill) => (
                   <SkillCard

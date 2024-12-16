@@ -114,10 +114,19 @@ function LandingPage({ onLaunch }: { onLaunch: () => void }) {
             onClick={() => setShowSwapModal(true)}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-12 py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-xl font-bold shadow-lg shadow-purple-500/20"
+            className="px-12 py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-xl font-bold shadow-lg shadow-purple-500/20 flex flex-col items-center"
           >
-            Buy Now on Agent Swap v2.0
+            <span>AGENT DEX</span>
+            <span className="text-sm">BUY $AGENTX NOW</span>
           </motion.button>
+          <div className="flex space-x-4 mt-4">
+            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+              <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+              <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+          </div>
         </motion.div>
 
         {active && account && (

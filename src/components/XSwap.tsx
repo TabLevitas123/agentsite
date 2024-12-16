@@ -63,9 +63,17 @@ const XSwap: React.FC = () => {
   if (!provider) {
     return (
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-bold text-accent-green mb-6">
-          Swap Tokens
-        </h2>
+        <div className="flex justify-between items-center w-full mb-6">
+          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <div className="flex space-x-4">
+            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+              <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+              <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+          </div>
+        </div>
         <div className="w-full max-w-[360px] p-6 bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-red-500/20">
           <p className="text-red-500 text-center">
             Unable to connect to Ethereum network. Please check your connection and try again.
@@ -79,9 +87,17 @@ const XSwap: React.FC = () => {
   if (tokenListError) {
     return (
       <div className="flex flex-col items-center">
-        <h2 className="text-2xl font-bold text-accent-green mb-6">
-          Swap Tokens
-        </h2>
+        <div className="flex justify-between items-center w-full mb-6">
+          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <div className="flex space-x-4">
+            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+              <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+              <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
+          </div>
+        </div>
         <div className="w-full max-w-[360px] p-6 bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-red-500/20">
           <p className="text-red-500 text-center">
             Unable to load token lists. Please try again later.
@@ -93,9 +109,25 @@ const XSwap: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <h2 className="text-2xl font-bold text-accent-green mb-6">
-        Swap Tokens
-      </h2>
+      <div className="flex justify-between items-center w-full mb-6">
+        <div>
+          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <p className="text-lg text-gray-400 text-center">
+            BUY $AGENTX!<br />
+            RIGHT HERE!<br />
+            RIGHT NOW!<br />
+            On Agent X's Private DEX!
+          </p>
+        </div>
+        <div className="flex space-x-4">
+          <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+            <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+          </a>
+          <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+            <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+          </a>
+        </div>
+      </div>
       <div className="w-full max-w-[360px] bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-accent-green/20">
         <SwapWidget
           provider={provider}
