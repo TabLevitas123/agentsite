@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -9,6 +11,8 @@
 
 body {
   @apply bg-dark-bg text-white;
+  font-family: 'Space Grotesk', sans-serif;
+  letter-spacing: 0.02em;
 }
 
 .gradient-text {
@@ -108,4 +112,40 @@ html {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Electric effect animation */
+@keyframes electric-pulse {
+  0% {
+    opacity: 0.3;
+    stroke-dashoffset: 1000;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.3;
+    stroke-dashoffset: 0;
+  }
+}
+
+.electric-line {
+  stroke-dasharray: 1000;
+  animation: electric-pulse 3s ease-in-out infinite;
+}
+
+/* Brain zoom animation */
+@keyframes brain-zoom {
+  0% {
+    transform: scale(0.1) rotate3d(1, 1, 1, 0deg);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1) rotate3d(1, 1, 1, 360deg);
+    opacity: 1;
+  }
+}
+
+.brain-zoom {
+  animation: brain-zoom 2s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }

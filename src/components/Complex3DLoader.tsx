@@ -6,119 +6,70 @@ interface Point3D {
   z: number;
 }
 
-interface Geometry {
-  icosahedron: Point3D[];
-  octahedron: Point3D[];
-  cube: Point3D[];
-}
-
 function Complex3DLoader() {
   const [time, setTime] = useState(0);
-  const PHI = (1 + Math.sqrt(5)) / 2;
+  const [isInitialAnimation, setIsInitialAnimation] = useState(true);
 
-  // Generate vertices for multiple platonic solids
-  const geometries = useMemo(() => {
-    // Icosahedron vertices
-    const icosahedron: Point3D[] = [
-      [-1, PHI, 0], [1, PHI, 0], [-1, -PHI, 0], [1, -PHI, 0],
-      [0, -1, PHI], [0, 1, PHI], [0, -1, -PHI], [0, 1, -PHI],
-      [PHI, 0, -1], [PHI, 0, 1], [-PHI, 0, -1], [-PHI, 0, 1]
-    ].map(([x, y, z]) => ({x, y, z}));
-
-    // Octahedron vertices
-    const octahedron: Point3D[] = [
-      [1, 0, 0], [-1, 0, 0], [0, 1, 0],
-      [0, -1, 0], [0, 0, 1], [0, 0, -1]
-    ].map(([x, y, z]) => ({x, y, z}));
-
-    // Cube vertices
-    const cube: Point3D[] = [
-      [-1, -1, -1], [1, -1, -1], [1, 1, -1], [-1, 1, -1],
-      [-1, -1, 1], [1, -1, 1], [1, 1, 1], [-1, 1, 1]
-    ].map(([x, y, z]) => ({x, y, z}));
-
-    // Normalize and scale vertices
-    const normalize = (vertices: Point3D[], scale = 80): Point3D[] => {
-      return vertices.map(v => {
-        const len = Math.sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
-        return {
-          x: (v.x / len) * scale,
-          y: (v.y / len) * scale,
-          z: (v.z / len) * scale
-        };
+  // Generate brain-like structure points
+  const brainPoints = useMemo(() => {
+    const points: Point3D[] = [];
+    const numPoints = 100;
+    
+    // Create points in a brain-like ellipsoid shape
+    for (let i = 0; i < numPoints; i++) {
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+      // Ellipsoid parameters (stretched in x and z directions for brain shape)
+      const a = 1.3; // x-axis stretch
+      const b = 1.0; // y-axis
+      const c = 1.1; // z-axis stretch
+      
+      points.push({
+        x: a * 80 * Math.sin(phi) * Math.cos(theta),
+        y: b * 60 * Math.sin(phi) * Math.sin(theta),
+        z: c * 70 * Math.cos(phi)
       });
-    };
-
-    return {
-      icosahedron: normalize(icosahedron),
-      octahedron: normalize(octahedron),
-      cube: normalize(cube)
-    };
+    }
+    
+    return points;
   }, []);
 
-  // Interpolate between shapes
-  const interpolateVertices = (time: number): Point3D[] => {
-    const period = 6000; // Total cycle time in ms
-    const t = (time % period) / period;
+  // Generate random electric paths
+  const electricPaths = useMemo(() => {
+    const paths: Point3D[][] = [];
+    const numPaths = 8;
     
-    let sourceVertices: Point3D[];
-    let targetVertices: Point3D[];
-    let morphT = 0;
-
-    if (t < 0.33) {
-      sourceVertices = geometries.icosahedron;
-      targetVertices = geometries.octahedron;
-      morphT = (t * 3) % 1;
-    } else if (t < 0.66) {
-      sourceVertices = geometries.octahedron;
-      targetVertices = geometries.cube;
-      morphT = ((t - 0.33) * 3) % 1;
-    } else {
-      sourceVertices = geometries.cube;
-      targetVertices = geometries.icosahedron;
-      morphT = ((t - 0.66) * 3) % 1;
+    for (let i = 0; i < numPaths; i++) {
+      const path: Point3D[] = [];
+      let currentPoint = { ...brainPoints[Math.floor(Math.random() * brainPoints.length)] };
+      
+      for (let j = 0; j < 5; j++) {
+        path.push({ ...currentPoint });
+        currentPoint = {
+          x: currentPoint.x + (Math.random() - 0.5) * 40,
+          y: currentPoint.y + (Math.random() - 0.5) * 40,
+          z: currentPoint.z + (Math.random() - 0.5) * 40
+        };
+      }
+      paths.push(path);
     }
-
-    // Smooth easing function
-    morphT = (1 - Math.cos(morphT * Math.PI)) / 2;
-
-    // Interpolate vertices
-    const maxVertices = Math.max(sourceVertices.length, targetVertices.length);
-    const vertices: Point3D[] = [];
-
-    for (let i = 0; i < maxVertices; i++) {
-      const source = sourceVertices[i % sourceVertices.length];
-      const target = targetVertices[i % targetVertices.length];
-      vertices.push({
-        x: source.x + (target.x - source.x) * morphT,
-        y: source.y + (target.y - source.y) * morphT,
-        z: source.z + (target.z - source.z) * morphT
-      });
-    }
-
-    return vertices;
-  };
+    
+    return paths;
+  }, [brainPoints]);
 
   const transformPoint = (point: Point3D, time: number): Point3D => {
-    const rotateX = time * 0.0007;
     const rotateY = time * 0.0005;
     const rotateZ = time * 0.0003;
 
-    const cosX = Math.cos(rotateX);
-    const sinX = Math.sin(rotateX);
     const cosY = Math.cos(rotateY);
     const sinY = Math.sin(rotateY);
     const cosZ = Math.cos(rotateZ);
     const sinZ = Math.sin(rotateZ);
 
     const rotated = {
-      x: point.x * cosY * cosZ - point.y * cosY * sinZ + point.z * sinY,
-      y: point.x * (sinX * sinY * cosZ + cosX * sinZ) + 
-         point.y * (-sinX * sinY * sinZ + cosX * cosZ) - 
-         point.z * sinX * cosY,
-      z: point.x * (-cosX * sinY * cosZ + sinX * sinZ) + 
-         point.y * (cosX * sinY * sinZ + sinX * cosZ) + 
-         point.z * cosX * cosY
+      x: point.x * cosY * cosZ - point.y * sinZ + point.z * sinY,
+      y: point.x * sinZ + point.y * cosZ,
+      z: -point.x * sinY * cosZ + point.z * cosY
     };
 
     const scale = 200 / (200 + rotated.z);
@@ -129,71 +80,52 @@ function Complex3DLoader() {
     };
   };
 
-  // Generate dynamic edges
-  const generateEdges = (vertices: Point3D[]): [number, number][] => {
-    const edges: [number, number][] = [];
-    for (let i = 0; i < vertices.length; i++) {
-      for (let j = i + 1; j < vertices.length; j++) {
+  // Generate neural connections
+  const generateConnections = (points: Point3D[]): [number, number][] => {
+    const connections: [number, number][] = [];
+    for (let i = 0; i < points.length; i++) {
+      for (let j = i + 1; j < points.length; j++) {
         const dist = Math.sqrt(
-          Math.pow(vertices[i].x - vertices[j].x, 2) +
-          Math.pow(vertices[i].y - vertices[j].y, 2) +
-          Math.pow(vertices[i].z - vertices[j].z, 2)
+          Math.pow(points[i].x - points[j].x, 2) +
+          Math.pow(points[i].y - points[j].y, 2) +
+          Math.pow(points[i].z - points[j].z, 2)
         );
-        if (dist < 160) {
-          edges.push([i, j]);
+        if (dist < 50) {
+          connections.push([i, j]);
         }
       }
     }
-    return edges;
+    return connections;
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
       setTime(t => t + 16);
     }, 16);
-    return () => clearInterval(interval);
+
+    // Set initial animation to false after zoom completes
+    const timeout = setTimeout(() => {
+      setIsInitialAnimation(false);
+    }, 2000);
+
+    return () => {
+      clearInterval(interval);
+      clearTimeout(timeout);
+    };
   }, []);
 
-  // Current vertices and transformed points
-  const currentVertices = interpolateVertices(time);
-  const transformedPoints = currentVertices.map(p => transformPoint(p, time));
-  const edges = generateEdges(currentVertices);
+  const transformedPoints = brainPoints.map(p => transformPoint(p, time));
+  const connections = generateConnections(brainPoints);
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-90 z-50">
-      <div className="w-[800px] h-[800px] relative">
+      <div className={`w-[800px] h-[800px] relative ${isInitialAnimation ? 'brain-zoom' : ''}`}>
         <svg 
           viewBox="-100 -100 200 200" 
           className="w-full h-full"
         >
-          {/* Inner connective lines */}
-          {transformedPoints.map((point, i) => (
-            transformedPoints.slice(i + 1).map((target, j) => {
-              const dist = Math.sqrt(
-                Math.pow(point.x - target.x, 2) + 
-                Math.pow(point.y - target.y, 2)
-              );
-              if (dist < 100) {
-                const opacity = (1 - dist / 100) * 0.3;
-                return (
-                  <line
-                    key={`inner-${i}-${j}`}
-                    x1={point.x}
-                    y1={point.y}
-                    x2={target.x}
-                    y2={target.y}
-                    stroke="#4ADE80"
-                    strokeWidth="0.5"
-                    opacity={opacity}
-                  />
-                );
-              }
-              return null;
-            })
-          ))}
-
-          {/* Main structure edges */}
-          {edges.map(([i, j], index) => {
+          {/* Neural connections */}
+          {connections.map(([i, j], index) => {
             const p1 = transformedPoints[i];
             const p2 = transformedPoints[j];
             const depth = (p1.z + p2.z) / 2;
@@ -201,33 +133,52 @@ function Complex3DLoader() {
             
             return (
               <line
-                key={`edge-${index}`}
+                key={`connection-${index}`}
                 x1={p1.x}
                 y1={p1.y}
                 x2={p2.x}
                 y2={p2.y}
-                stroke={depth > 0 ? '#4ADE80' : '#8B5CF6'}
+                stroke="#8B5CF6"
+                strokeWidth="0.5"
+                opacity={opacity * 0.5}
+              />
+            );
+          })}
+
+          {/* Electric paths */}
+          {electricPaths.map((path, pathIndex) => {
+            const transformedPath = path.map(p => transformPoint(p, time));
+            const pathString = transformedPath
+              .map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x} ${p.y}`)
+              .join(' ');
+
+            return (
+              <path
+                key={`electric-${pathIndex}`}
+                d={pathString}
+                fill="none"
+                stroke="#4ADE80"
                 strokeWidth="2"
-                opacity={opacity}
-                strokeLinecap="round"
+                className="electric-line"
                 style={{
-                  filter: `drop-shadow(0 0 3px ${depth > 0 ? '#4ADE80' : '#8B5CF6'})`
+                  filter: 'drop-shadow(0 0 3px #4ADE80)',
+                  animationDelay: `${pathIndex * 0.2}s`
                 }}
               />
             );
           })}
 
-          {/* Vertices */}
+          {/* Brain points */}
           {transformedPoints.map((point, index) => (
             <circle
-              key={`vertex-${index}`}
+              key={`point-${index}`}
               cx={point.x}
               cy={point.y}
-              r="2"
-              fill={point.z > 0 ? '#4ADE80' : '#8B5CF6'}
+              r="1.5"
+              fill="#8B5CF6"
               opacity={(point.z + 100) / 200}
               style={{
-                filter: `drop-shadow(0 0 3px ${point.z > 0 ? '#4ADE80' : '#8B5CF6'})`
+                filter: 'drop-shadow(0 0 2px #8B5CF6)'
               }}
             />
           ))}
@@ -237,7 +188,7 @@ function Complex3DLoader() {
         <div 
           className="absolute inset-0 pointer-events-none"
           style={{
-            background: 'radial-gradient(circle, rgba(74, 222, 128, 0.1) 0%, rgba(139, 92, 246, 0.1) 50%, transparent 70%)',
+            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, rgba(74, 222, 128, 0.1) 50%, transparent 70%)',
             filter: 'blur(40px)',
             mixBlendMode: 'screen'
           }}
