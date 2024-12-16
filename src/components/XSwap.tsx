@@ -133,7 +133,7 @@ const XSwap: React.FC = () => {
           provider={provider}
           theme={theme}
           width="100%"
-          defaultOutputTokenAddress="0x6B175474E89094C44Da98b954EedeAC495271d0F" // DAI address
+          defaultOutputTokenAddress="0x333446158681491DfeE9d34e34774d44764d3816" // AGENTX address
           defaultInputTokenAddress="NATIVE" // ETH
           tokenList={TOKEN_LISTS[0]}
           onError={handleTokenListError}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useWeb3React } from '@web3-react/core';
+import { InjectedConnector } from '@web3-react/injected-connector';
 import XSwap from './XSwap';
 
 interface NFT {
@@ -63,6 +64,10 @@ function SkillCard({ name, selected, onClick }: SkillCardProps) {
   );
 }
 
+const injected = new InjectedConnector({
+  supportedChainIds: [1, 5, 11155111] // Mainnet, Goerli, Sepolia
+});
+
 function DappInterface() {
   const [activeTab, setActiveTab] = useState<'create' | 'swap'>('create');
   const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
@@ -73,7 +78,7 @@ function DappInterface() {
   const [showSuccess, setShowSuccess] = useState(false);
   const [recentNFTs, setRecentNFTs] = useState<NFT[]>([]);
   const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
-  const { account } = useWeb3React();
+  const { account, activate } = useWeb3React();
 
   const handleSkillToggle = (skill: string) => {
     setSelectedSkills(prev => 
@@ -151,6 +156,15 @@ function DappInterface() {
     }
   };
 
+  const handleConnectWallet = async () => {
+    try {
+      await activate(injected);
+    } catch (error) {
+      console.error('Failed to connect wallet:', error);
+      setError('Failed to connect wallet. Please try again.');
+    }
+  };
+
   return (
     <div className="min-h-screen bg-dark-bg text-white p-6">
       <div className="max-w-6xl mx-auto">
@@ -195,6 +209,20 @@ function DappInterface() {
             </motion.button>
           </div>
         </div>
+
+        {/* Connect Wallet Button */}
+        {!account && (
+          <div className="mb-6">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={handleConnectWallet}
+              className="px-6 py-3 rounded-xl bg-gradient-to-r from-accent-green to-accent-violet text-lg font-bold shadow-lg"
+            >
+              Connect Wallet
+            </motion.button>
+          </div>
+        )}
 
         {/* Connected Account Display */}
         {account && (
