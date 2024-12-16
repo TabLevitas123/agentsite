@@ -1,80 +1,103 @@
-# Agent NFT Platform
+# AgentX Platform
 
-A Web3 DApp for creating customizable Solana NFT agents with specialized capabilities.
+An Ethereum-based NFT platform for creating and managing agent NFTs with customizable capabilities.
 
-## Overview
+## Project Structure
 
-This platform allows users to create personalized NFT agents with customizable tools and skills. Each agent can be equipped with various capabilities, making them unique and valuable digital assets.
+The project consists of two main interfaces:
+- Landing page (agentxai.io)
+- Dapp interface (agentxai.app)
 
-## Features
+## Smart Contract Features
 
-### Agent Creation
-- Custom image upload for NFT
-- Customizable agent name
-- Selection of tools/skills
+The platform is built on Ethereum and includes:
 
-### Available Skills/Tools
-1. Web Browsing
-2. Google Search
-3. PC Control
-4. Mac Control
-5. Android Phone Control
-6. Android Tablet Control
-7. iPhone Control
-8. iPad Control
-9. Ubuntu Control
-10. Debian Control
-11. Kali Linux Control
-12. RedHat Linux Control
-13. Natural Language Processing
-14. Synthetic Voice
-15. Voice Cloning
-16. Weather Lookup
-17. GPS Object Tracking
-18. Media File Conversion
-19. Document File Conversion
-20. Amazon Shopping
-21. Temu Shopping
-22. Walmart Shopping
-23. JCPenny Shopping
+### AgentNFT Contract
+- ERC721 implementation for NFT functionality
+- Skill management system (up to 50 skills per agent)
+- Custom skill request system (up to 20 custom skills)
+- Chainlink price feed integration for ETH/USD conversion
+- Built-in marketplace functionality for future implementation
 
-### Pricing Structure
-- Individual Skills: 0.002 ETH (Presale Price)
-- Regular Price: 0.005 ETH per skill
-- Complete Skill Bundle: 0.1 ETH for all 23 pre-made skills
-- Custom Skill Requests: 0.1 ETH (Presale)
-- Custom Skill Regular Price: 0.15 ETH
+### Pricing
+- Custom skill requests: 0.03 ETH
+- Items: 0.01 ETH (paid in AGI tokens)
+- Marketplace fee: 15%
 
-### Marketplace
-- Users can lease their custom-built agents
-- 85% profit share for agent owners
-- 15% platform fee for operational costs
+## Frontend Components
 
-## Technical Specifications
+### DappInterface
+- Agent creation interface with name and image upload
+- Predefined skill selection system
+- Recent NFTs display
+- Wallet connection integration
 
-### Frontend
-- Dark mode exclusive design
-- Green and electric violet accent colors
-- Minimalist and futuristic interface
-- Advanced loading animations
-- Centralized LAUNCH DAPP button
-- Buy $AGI button (Agentic General Intelligence token)
+### XSwap
+- Integrated Uniswap widget for token swapping
+- Supports multiple token lists
+- Custom dark theme implementation
+- ETH/Token trading pairs
 
-### Smart Contracts
-- Rigorous audit requirements
-- Token Distribution Model
-- No vesting period for team allocated tokens
-- Liquidity lock: 90 days after reaching 10M USDT market cap
+### Additional Components
+- Complex3DLoader: Loading animation component
+- NeuralBrainAnimation: Visual effects
+- LandingPage: Main marketing interface
 
-### Infrastructure
-- AWS deployment
-- High-performance rendering
-- Efficient animation systems
-- Rounded corner design elements
-- Seamless user experience
+## Development Setup
 
-## Development Status
+1. Install dependencies:
+```bash
+npm install
+```
 
-Agent skills are currently in development. The marketplace functionality exists in pseudocode form, ready for future implementation. Smart contracts are being optimized for maximum security and efficiency.
+2. Configure environment variables:
+- Copy `.env.example` to `.env`
+- Add required API keys and contract addresses
 
-*Note: This is a presale opportunity. Prices will increase once full functionality is launched.*
+3. Run development server:
+```bash
+# For landing page
+npm run dev
+
+# For dapp interface
+npm run dev:dapp
+```
+
+## Deployment
+
+Refer to `DEPLOYMENT_GUIDE.md` for detailed deployment instructions using Render.com.
+
+## Technical Stack
+
+- Frontend: React with TypeScript
+- Smart Contracts: Solidity 0.8.17
+- Development: Hardhat
+- UI: Tailwind CSS
+- Web3: ethers.js, web3-react
+- DEX Integration: Uniswap Widget
+
+## Security Features
+
+The smart contract includes:
+- ReentrancyGuard for transaction safety
+- Pausable functionality for emergency stops
+- Owner-only administrative functions
+- Emergency withdrawal capabilities
+
+## Current Implementation Status
+
+1. Smart Contract
+- Full ERC721 implementation
+- Complete skill management system
+- Marketplace structure ready for future expansion
+
+2. Frontend
+- Complete UI implementation
+- Local state management for NFT creation
+- Uniswap integration for token swapping
+- Wallet connection support
+
+3. Deployment
+- Dual deployment setup (landing + dapp)
+- Render.com configuration
+- Domain management for both interfaces

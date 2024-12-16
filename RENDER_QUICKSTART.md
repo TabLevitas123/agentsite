@@ -1,5 +1,9 @@
 # Quick Start Guide: Deploying Your DApp to Render
 
+This guide explains how to deploy the AgentX AI platform across two domains:
+- Landing page at agentxai.io
+- Dapp interface at agentxai.app
+
 ## Pre-Deployment Checklist
 
 1. **Ensure Smart Contracts are Deployed**
@@ -27,22 +31,36 @@ git push origin main
 3. Choose "Sign up with GitHub"
 4. Authorize Render to access your repositories
 
-### 3. Deploy Static Site
+### 3. Deploy Landing Page (agentxai.io)
 1. In Render dashboard, click "New +"
 2. Select "Static Site"
 3. Choose your repository
 4. Configure the following settings:
 
    ```
-   Name: agentsite (or your preferred name)
+   Name: agentxai-landing (or your preferred name)
    Branch: main
    Root Directory: (leave empty)
-   Build Command: npm run build
+   Build Command: npm install && npm run build
    Publish Directory: build
    ```
 
-### 4. Environment Variables
-Add these in Render dashboard (Settings → Environment):
+### 4. Deploy Dapp Interface (agentxai.app)
+1. In Render dashboard, click "New +"
+2. Select "Static Site"
+3. Choose your repository
+4. Configure the following settings:
+
+   ```
+   Name: agentxai-dapp (or your preferred name)
+   Branch: main
+   Root Directory: (leave empty)
+   Build Command: npm install && npm run build:dapp
+   Publish Directory: build
+   ```
+
+### 5. Environment Variables
+Add these in Render dashboard (Settings → Environment) for **both** sites:
 
 Required:
 ```
@@ -59,8 +77,8 @@ REACT_APP_TESTNET_RPC_URL=https://sepolia.infura.io/v3/your_infura_id
 REACT_APP_DEFAULT_NETWORK=mainnet
 ```
 
-### 5. Advanced Build Settings
-In the Render dashboard:
+### 6. Advanced Build Settings
+In the Render dashboard for **both** sites:
 1. Go to your site's settings
 2. Under "Build & Deploy":
    - Auto-Deploy: Yes
@@ -69,11 +87,13 @@ In the Render dashboard:
 
 ## Testing Deployment
 
-1. After deployment completes, Render will provide a URL: `https://your-site-name.onrender.com`
+1. After deployment completes, Render will provide URLs:
+   - Landing page: `https://your-landing-site.onrender.com`
+   - Dapp interface: `https://your-dapp-site.onrender.com`
 2. Test the following:
-   - Website loads correctly
-   - Wallet connection works
-   - Smart contract interactions
+   - Both websites load correctly
+   - Wallet connection works on the dapp
+   - Smart contract interactions on the dapp
    - All components render properly
 
 ## Common Issues & Solutions
@@ -91,11 +111,12 @@ In the Render dashboard:
 3. **Blank Page After Deploy**
    - Check browser console for errors
    - Verify build output in Render logs
-   - Test locally with `npm run build && serve -s build`
+   - Test locally with `npm run build && serve -s build` (for landing page)
+   - Test locally with `npm run build:dapp && serve -s build` (for dapp)
 
 ## Next Steps
 
-1. **Monitor Your Site**
+1. **Monitor Your Sites**
    - Check Render dashboard for build status
    - Monitor Web3 provider dashboard for API usage
    - Test on different networks (mainnet/testnet)

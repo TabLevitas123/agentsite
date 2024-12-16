@@ -1,6 +1,7 @@
 const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = function override(config) {
+module.exports = function override(config, env) {
   const fallback = config.resolve.fallback || {};
   Object.assign(fallback, {
     "crypto": require.resolve("crypto-browserify"),
@@ -40,6 +41,22 @@ module.exports = function override(config) {
   config.resolve.extensions = [...(config.resolve.extensions || []), '.mjs'];
 
   config.ignoreWarnings = [/Failed to parse source map/];
+
+  // Handle multiple entry points based on build type
+  if (process.env.BUILD_TYPE === 'dapp') {
+    config.entry = './src/index-dapp.tsx';
+    // Filter out existing HtmlWebpackPlugin
+    config.plugins = config.plugins.filter(plugin => !(plugin instanceof HtmlWebpackPlugin));
+    // Add new HtmlWebpackPlugin for dapp
+    config.plugins.push(
+      new HtmlWebpackPlugin({
+        template: 'public/index.html',
+        filename: 'index.html',
+        inject: true,
+        title: 'AgentX AI Platform'
+      })
+    );
+  }
 
   return config;
 };

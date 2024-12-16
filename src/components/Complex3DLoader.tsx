@@ -52,7 +52,7 @@ const Complex3DLoader = () => {
 
   // Interpolate between shapes
   const interpolateVertices = (time: number) => {
-    const period = 6000; // Total cycle time in ms
+    const period = 3000; // Reduced from 6000 to 3000ms
     const t = (time % period) / period;
     
     let sourceVertices: Point3D[], targetVertices: Point3D[];
@@ -93,9 +93,10 @@ const Complex3DLoader = () => {
   };
 
   const transformPoint = (point: Point3D, time: number): Point3D => {
-    const rotateX = time * 0.0007;
-    const rotateY = time * 0.0005;
-    const rotateZ = time * 0.0003;
+    // Increased rotation speeds
+    const rotateX = time * 0.001;
+    const rotateY = time * 0.0008;
+    const rotateZ = time * 0.0006;
 
     const cosX = Math.cos(rotateX);
     const sinX = Math.sin(rotateX);

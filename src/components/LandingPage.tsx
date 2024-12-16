@@ -4,7 +4,7 @@ import { useWeb3React } from '@web3-react/core';
 import { injected, getErrorMessage } from '../utils/web3';
 import XSwap from './XSwap';
 
-function LandingPage({ onLaunch }: { onLaunch: () => void }) {
+function LandingPage() {
   const [pageLoaded, setPageLoaded] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showSwapModal, setShowSwapModal] = useState(false);
@@ -100,14 +100,16 @@ function LandingPage({ onLaunch }: { onLaunch: () => void }) {
               Connect MetaMask
             </motion.button>
           ) : (
-            <motion.button
+            <motion.a
+              href="https://AgentXAI.app"
+              target="_blank"
+              rel="noopener noreferrer"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              onClick={onLaunch}
               className="px-12 py-4 rounded-xl bg-gradient-to-r from-accent-green to-accent-violet text-xl font-bold shadow-lg shadow-accent-green/20"
             >
               Launch Dapp
-            </motion.button>
+            </motion.a>
           )}
 
           <motion.button

@@ -45,7 +45,9 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
+    "start:dapp": "BUILD_TYPE=dapp react-app-rewired start",
     "build": "react-app-rewired build",
+    "build:dapp": "BUILD_TYPE=dapp react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },

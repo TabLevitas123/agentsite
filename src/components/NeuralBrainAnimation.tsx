@@ -87,7 +87,7 @@ const NeuralBrainAnimation = () => {
                 }
 
                 .neural-container {
-                  animation: morphSequence 15s infinite ease-in-out;
+                  animation: morphSequence 8s infinite ease-in-out;
                   transform-origin: center;
                 }
                 
@@ -96,38 +96,38 @@ const NeuralBrainAnimation = () => {
                   fill: none;
                   stroke-dasharray: 1000;
                   animation: 
-                    pathPulse 3s infinite ease-in-out,
-                    pathGrow 5s infinite linear;
+                    pathPulse 1.5s infinite ease-in-out,
+                    pathGrow 2s infinite linear;
                   filter: url(#glow);
                 }
                 
                 .neural-node {
                   fill: url(#nodeGradient);
                   filter: url(#glow);
-                  animation: nodePulse 2s infinite ease-in-out;
+                  animation: nodePulse 1s infinite ease-in-out;
                   transform-origin: center;
                 }
                 
                 .branch {
                   transform-origin: center;
-                  animation: branchMorph 10s infinite ease-in-out;
+                  animation: branchMorph 5s infinite ease-in-out;
                 }
                 
                 .depth-1 { animation-delay: 0s; }
-                .depth-2 { animation-delay: 0.2s; }
-                .depth-3 { animation-delay: 0.4s; }
-                .depth-4 { animation-delay: 0.6s; }
+                .depth-2 { animation-delay: 0.1s; }
+                .depth-3 { animation-delay: 0.2s; }
+                .depth-4 { animation-delay: 0.3s; }
 
                 .branch-container {
                   transform-origin: center;
                 }
 
                 .branch-container:nth-child(odd) {
-                  animation: branchMorph 10s infinite ease-in-out;
+                  animation: branchMorph 5s infinite ease-in-out;
                 }
 
                 .branch-container:nth-child(even) {
-                  animation: branchMorph 10s infinite ease-in-out reverse;
+                  animation: branchMorph 5s infinite ease-in-out reverse;
                 }
               `}
             </style>
@@ -154,7 +154,7 @@ const NeuralBrainAnimation = () => {
             r="20"
             className="neural-node"
             style={{ 
-              animation: 'nodePulse 4s infinite ease-in-out',
+              animation: 'nodePulse 2s infinite ease-in-out',
               transformOrigin: 'center'
             }}
           />
