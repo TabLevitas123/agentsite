@@ -140,6 +140,9 @@ const LandingPage: React.FC = () => {
             <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
+            <a href="https://www.dextools.io/app/ether/pair-explorer/0xB1cA1e144d1e17911882a7c130f12839E8BCC313" target="_blank" rel="noopener noreferrer">
+              <img src="/dextools-logo.svg" alt="Dextools" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
           </div>
         </motion.div>
 

@@ -129,6 +129,7 @@ const XSwap: React.FC = () => {
           theme={theme}
           width="100%"
           defaultInputTokenAddress="NATIVE"
+          defaultOutputTokenAddress="0xB1cA1e144d1e17911882a7c130f12839E8BCC313"
           onError={handleTokenListError}
           hideConnectionUI={true}
           brandedFooter={false}
