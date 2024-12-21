@@ -1,9 +1,9 @@
-import React from 'react'
-import { SwapWidget, Theme } from '@uniswap/widgets'
-import '@uniswap/widgets/fonts.css'
-import { useWeb3React } from '@web3-react/core'
-import { JsonRpcProvider } from '@ethersproject/providers'
-import { useMemo, useState } from 'react'
+import React from 'react';
+import { SwapWidget, Theme } from '@uniswap/widgets';
+import '@uniswap/widgets/fonts.css';
+import { useWeb3React } from '@web3-react/core';
+import { JsonRpcProvider } from '@ethersproject/providers';
+import { useMemo, useState } from 'react';
 
 // Custom theme matching the dark interface with red accents
 const theme: Theme = {
@@ -22,37 +22,37 @@ const theme: Theme = {
     small: 4,
     xsmall: 2
   },
-}
+};
 
 // JSON-RPC endpoint for Ethereum mainnet
-const MAINNET_RPC = 'https://cloudflare-eth.com' // Public RPC endpoint, no API key needed
+const MAINNET_RPC = 'https://cloudflare-eth.com'; // Public RPC endpoint, no API key needed
 
 // Configure the jsonRpcUrlMap for network support
 const jsonRpcUrlMap = {
   1: [MAINNET_RPC],
   5: ['https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'] // Public Goerli endpoint
-}
+};
 
 const XSwap: React.FC = () => {
-  const { library } = useWeb3React()
-  const [tokenListError, setTokenListError] = useState(false)
+  const { library } = useWeb3React();
+  const [tokenListError, setTokenListError] = useState(false);
   
   // Use a memoized provider to prevent unnecessary re-renders
   const provider = useMemo(() => {
     try {
-      return new JsonRpcProvider(MAINNET_RPC)
+      return new JsonRpcProvider(MAINNET_RPC);
     } catch (error) {
-      console.error('Provider initialization error:', error)
+      console.error('Provider initialization error:', error);
       // Return null if provider initialization fails
-      return null
+      return null;
     }
-  }, [library])
+  }, []);
 
   // Handle token list errors
   const handleTokenListError = (error: Error) => {
-    console.error('Token list error:', error)
-    setTokenListError(true)
-  }
+    console.error('Token list error:', error);
+    setTokenListError(true);
+  };
 
   // Show error message if no provider is available
   if (!provider) {
@@ -67,6 +67,9 @@ const XSwap: React.FC = () => {
             <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
+            <a href="https://www.dextools.io/app/ether/pair-explorer/0xB1cA1e144d1e17911882a7c130f12839E8BCC313" target="_blank" rel="noopener noreferrer">
+              <img src="/dextools-logo.svg" alt="Dextools" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
           </div>
         </div>
         <div className="w-full max-w-[360px] p-6 bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-red-500/20">
@@ -75,7 +78,7 @@ const XSwap: React.FC = () => {
           </p>
         </div>
       </div>
-    )
+    );
   }
 
   // Show error message if token lists fail to load
@@ -91,6 +94,9 @@ const XSwap: React.FC = () => {
             <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
+            <a href="https://www.dextools.io/app/ether/pair-explorer/0xB1cA1e144d1e17911882a7c130f12839E8BCC313" target="_blank" rel="noopener noreferrer">
+              <img src="/dextools-logo.svg" alt="Dextools" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+            </a>
           </div>
         </div>
         <div className="w-full max-w-[360px] p-6 bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-red-500/20">
@@ -99,7 +105,7 @@ const XSwap: React.FC = () => {
           </p>
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -121,6 +127,9 @@ const XSwap: React.FC = () => {
           <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
             <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
           </a>
+          <a href="https://www.dextools.io/app/ether/pair-explorer/0xB1cA1e144d1e17911882a7c130f12839E8BCC313" target="_blank" rel="noopener noreferrer">
+            <img src="/dextools-logo.svg" alt="Dextools" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
+          </a>
         </div>
       </div>
       <div className="w-full max-w-[360px] bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-accent-red/20">
@@ -134,14 +143,21 @@ const XSwap: React.FC = () => {
           hideConnectionUI={true}
           brandedFooter={false}
           permit2={false}
-          tokenList="https://tokens.uniswap.org"
+          tokenList={[{
+            address: "0xB1cA1e144d1e17911882a7c130f12839E8BCC313",
+            chainId: 1,
+            decimals: 18,
+            logoURI: "http://localhost:3001/logo.jpg",
+            name: "Bitcoin AI",
+            symbol: "BTCAI"
+          }]}
         />
       </div>
       <p className="text-sm text-gray-400 mt-4 text-center">
         Powered by Uniswap Protocol
       </p>
     </div>
-  )
-}
+  );
+};
 
-export default XSwap
+export default XSwap;
