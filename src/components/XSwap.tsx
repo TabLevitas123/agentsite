@@ -1,19 +1,20 @@
+import React from 'react'
 import { SwapWidget, Theme } from '@uniswap/widgets'
 import '@uniswap/widgets/fonts.css'
 import { useWeb3React } from '@web3-react/core'
 import { JsonRpcProvider } from '@ethersproject/providers'
 import { useMemo, useState } from 'react'
 
-// Custom theme matching the dark interface
+// Custom theme matching the dark interface with red accents
 const theme: Theme = {
-  primary: '#4F46E5', // Indigo (accent color)
-  secondary: '#374151', // Medium gray
-  interactive: '#4F46E5', // Indigo
-  container: '#1F2937', // Darker gray
-  module: '#111827', // Darkest gray
-  accent: '#10B981', // Accent green
-  outline: '#4B5563', // Border gray
-  dialog: '#111827', // Darkest gray
+  primary: '#FF0000', // Red
+  secondary: '#DC143C', // Crimson
+  interactive: '#FF0000', // Red
+  container: '#111111', // Dark surface
+  module: '#000000', // Dark background
+  accent: '#FF0000', // Red accent
+  outline: '#333333', // Border gray
+  dialog: '#000000', // Dark background
   fontFamily: 'Inter, sans-serif',
   borderRadius: {
     large: 12,
@@ -26,25 +27,19 @@ const theme: Theme = {
 // JSON-RPC endpoint for Ethereum mainnet
 const MAINNET_RPC = 'https://cloudflare-eth.com' // Public RPC endpoint, no API key needed
 
-// Use multiple token lists for redundancy
-const TOKEN_LISTS = [
-  'https://tokens.coingecko.com/uniswap/all.json',
-  'https://raw.githubusercontent.com/compound-finance/token-list/master/compound.tokenlist.json',
-  'https://raw.githubusercontent.com/Uniswap/default-token-list/master/build/uniswap-default.tokenlist.json'
-]
+// Configure the jsonRpcUrlMap for network support
+const jsonRpcUrlMap = {
+  1: [MAINNET_RPC],
+  5: ['https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'] // Public Goerli endpoint
+}
 
 const XSwap: React.FC = () => {
-  const { account, library } = useWeb3React()
+  const { library } = useWeb3React()
   const [tokenListError, setTokenListError] = useState(false)
   
   // Use a memoized provider to prevent unnecessary re-renders
   const provider = useMemo(() => {
     try {
-      // Try to use Web3 provider if available
-      if (library) {
-        return library
-      }
-      // Fallback to public RPC
       return new JsonRpcProvider(MAINNET_RPC)
     } catch (error) {
       console.error('Provider initialization error:', error)
@@ -54,8 +49,8 @@ const XSwap: React.FC = () => {
   }, [library])
 
   // Handle token list errors
-  const handleTokenListError = () => {
-    console.error('Failed to load token lists')
+  const handleTokenListError = (error: Error) => {
+    console.error('Token list error:', error)
     setTokenListError(true)
   }
 
@@ -64,12 +59,12 @@ const XSwap: React.FC = () => {
     return (
       <div className="flex flex-col items-center">
         <div className="flex justify-between items-center w-full mb-6">
-          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <h2 className="text-2xl font-bold text-accent-red">BITCOIN DEX</h2>
           <div className="flex space-x-4">
-            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://X.com/BitcoinAI_ETH" target="_blank" rel="noopener noreferrer">
               <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
-            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
           </div>
@@ -88,12 +83,12 @@ const XSwap: React.FC = () => {
     return (
       <div className="flex flex-col items-center">
         <div className="flex justify-between items-center w-full mb-6">
-          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <h2 className="text-2xl font-bold text-accent-red">BITCOIN DEX</h2>
           <div className="flex space-x-4">
-            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://X.com/BitcoinAI_ETH" target="_blank" rel="noopener noreferrer">
               <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
-            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
           </div>
@@ -111,34 +106,34 @@ const XSwap: React.FC = () => {
     <div className="flex flex-col items-center">
       <div className="flex justify-between items-center w-full mb-6">
         <div>
-          <h2 className="text-2xl font-bold text-accent-green">AGENT DEX</h2>
+          <h2 className="text-2xl font-bold text-accent-red">BITCOIN DEX</h2>
           <p className="text-lg text-gray-400 text-center">
-            BUY $AGENTX!<br />
+            BUY $BTCAI!<br />
             RIGHT HERE!<br />
             RIGHT NOW!<br />
-            On Agent X's Private DEX!
+            On Bitcoin AI's Private DEX!
           </p>
         </div>
         <div className="flex space-x-4">
-          <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+          <a href="https://X.com/BitcoinAI_ETH" target="_blank" rel="noopener noreferrer">
             <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
           </a>
-          <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+          <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
             <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
           </a>
         </div>
       </div>
-      <div className="w-full max-w-[360px] bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-accent-green/20">
+      <div className="w-full max-w-[360px] bg-dark-bg rounded-lg overflow-hidden shadow-xl border border-accent-red/20">
         <SwapWidget
           provider={provider}
           theme={theme}
           width="100%"
-          defaultOutputTokenAddress="0x333446158681491DfeE9d34e34774d44764d3816" // AGENTX address
-          defaultInputTokenAddress="NATIVE" // ETH
-          tokenList={TOKEN_LISTS[0]}
+          defaultInputTokenAddress="NATIVE"
           onError={handleTokenListError}
-          convenienceFee={0}
-          convenienceFeeRecipient={account || undefined}
+          hideConnectionUI={true}
+          brandedFooter={false}
+          permit2={false}
+          tokenList="https://tokens.uniswap.org"
         />
       </div>
       <p className="text-sm text-gray-400 mt-4 text-center">

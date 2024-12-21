@@ -5,8 +5,8 @@
 @tailwind utilities;
 
 :root {
-  --accent-green: #4ADE80;
-  --accent-violet: #8B5CF6;
+  --accent-red: #FF0000;
+  --accent-crimson: #DC143C;
 }
 
 body {
@@ -16,15 +16,15 @@ body {
 }
 
 .gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-green to-accent-violet;
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-accent-red to-accent-crimson;
 }
 
 .glow {
-  text-shadow: 0 0 10px var(--accent-green);
+  text-shadow: 0 0 10px var(--accent-red);
 }
 
-.glow-violet {
-  text-shadow: 0 0 10px var(--accent-violet);
+.glow-crimson {
+  text-shadow: 0 0 10px var(--accent-crimson);
 }
 
 /* Smooth scrolling */
@@ -42,7 +42,7 @@ html {
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gradient-to-b from-accent-green to-accent-violet rounded-full;
+  @apply bg-gradient-to-b from-accent-red to-accent-crimson rounded-full;
 }
 
 /* Button hover effects */
@@ -78,11 +78,11 @@ html {
 
 /* Card hover effects */
 .card-hover {
-  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-green/20;
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-red/20;
 }
 
-.card-hover-violet {
-  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-violet/20;
+.card-hover-crimson {
+  @apply transition-all duration-300 hover:shadow-lg hover:shadow-accent-crimson/20;
 }
 
 /* Glassmorphism */
@@ -94,9 +94,9 @@ html {
 .animated-gradient {
   background: linear-gradient(
     45deg,
-    var(--accent-green),
-    var(--accent-violet),
-    var(--accent-green)
+    var(--accent-red),
+    var(--accent-crimson),
+    var(--accent-red)
   );
   background-size: 200% 200%;
   animation: gradient 15s ease infinite;

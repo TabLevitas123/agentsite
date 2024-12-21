@@ -6,10 +6,10 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'accent-green': '#4ADE80',
-        'accent-violet': '#8B5CF6',
-        'dark-bg': '#0A0A0A',
-        'dark-surface': '#1A1A1A',
+        'accent-red': '#FF0000',
+        'accent-crimson': '#DC143C',
+        'dark-bg': '#000000',
+        'dark-surface': '#111111',
       },
       animation: {
         'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
@@ -52,8 +52,8 @@ module.exports = {
         xs: '2px',
       },
       boxShadow: {
-        'glow-green': '0 0 20px rgba(74, 222, 128, 0.3)',
-        'glow-violet': '0 0 20px rgba(139, 92, 246, 0.3)',
+        'glow-red': '0 0 20px rgba(255, 0, 0, 0.3)',
+        'glow-crimson': '0 0 20px rgba(220, 20, 60, 0.3)',
       }
     },
   },

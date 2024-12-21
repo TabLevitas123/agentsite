@@ -3,22 +3,20 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useWeb3React } from '@web3-react/core';
 import { injected, getErrorMessage } from '../utils/web3';
 import XSwap from './XSwap';
+import NeuralBrainAnimation from './NeuralBrainAnimation';
 
-function LandingPage() {
-  const [pageLoaded, setPageLoaded] = useState(false);
+const LandingPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [showSwapModal, setShowSwapModal] = useState(false);
+  const [loading, setLoading] = useState(true);
   const { activate, active, account } = useWeb3React();
 
   useEffect(() => {
-    // Track page load state
-    const handleLoad = () => setPageLoaded(true);
-    if (document.readyState === 'complete') {
-      setPageLoaded(true);
-    } else {
-      window.addEventListener('load', handleLoad);
-      return () => window.removeEventListener('load', handleLoad);
-    }
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   const connectWallet = async () => {
@@ -31,21 +29,35 @@ function LandingPage() {
   };
 
   return (
-    <motion.div 
-      className="min-h-screen bg-dark-bg text-white"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 1.5, ease: "easeInOut" }}
-    >
+    <>
+      <AnimatePresence>
+        {loading && (
+          <motion.div
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-50"
+          >
+            <NeuralBrainAnimation />
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      <motion.div
+        className="min-h-screen bg-dark-bg text-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: loading ? 0 : 1 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+      >
       {/* Hero Section */}
       <div className="flex flex-col items-center justify-center p-6 min-h-screen relative overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-accent-violet/10 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-b from-accent-red/10 to-transparent" />
           <div 
             className="absolute inset-0"
             style={{
-              backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(74, 222, 128, 0.1) 0%, transparent 50%)',
+              backgroundImage: 'radial-gradient(circle at 50% 50%, rgba(255, 0, 0, 0.1) 0%, transparent 50%)',
               animation: 'pulse 4s ease-in-out infinite'
             }}
           />
@@ -53,20 +65,20 @@ function LandingPage() {
 
         <div className="text-center mb-12 relative z-10">
           <motion.img
-            src="/logo.jpg"
-            alt="Agent X AI Logo"
+            src={`/logo.jpg?v=${Date.now()}`}
+            alt="Bitcoin AI Logo"
             className="w-32 h-32 mx-auto mb-6 rounded-full shadow-lg"
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           />
           <motion.h1 
-            className="text-7xl font-bold mb-4 gradient-text"
+            className="text-7xl font-bold mb-4 text-accent-red"
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.8 }}
           >
-            Agent X AI
+            Bitcoin AI
           </motion.h1>
           <motion.p 
             className="text-2xl text-gray-400"
@@ -74,7 +86,7 @@ function LandingPage() {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.7, duration: 0.8 }}
           >
-            The Future of Decentralized AI Agents
+            The Future of Decentralized Bitcoin Intelligence
           </motion.p>
         </div>
 
@@ -90,42 +102,42 @@ function LandingPage() {
             </div>
           )}
 
-          {!active ? (
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={connectWallet}
-              className="px-12 py-4 rounded-xl bg-gradient-to-r from-orange-500 to-yellow-500 text-xl font-bold shadow-lg"
-            >
-              Connect MetaMask
-            </motion.button>
-          ) : (
-            <motion.a
-              href="https://AgentXAI.app"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-12 py-4 rounded-xl bg-gradient-to-r from-accent-green to-accent-violet text-xl font-bold shadow-lg shadow-accent-green/20"
-            >
-              Launch Dapp
-            </motion.a>
-          )}
+          <motion.div className="flex flex-col items-center gap-4">
+            {!active && (
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={connectWallet}
+                className="px-12 py-4 rounded-xl bg-gradient-to-r from-accent-red to-accent-crimson text-xl font-bold shadow-lg"
+              >
+                Connect MetaMask
+              </motion.button>
+            )}
 
-          <motion.button
-            onClick={() => setShowSwapModal(true)}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="px-12 py-4 rounded-xl bg-gradient-to-r from-pink-500 to-purple-500 text-xl font-bold shadow-lg shadow-purple-500/20 flex flex-col items-center"
-          >
-            <span>AGENT DEX</span>
-            <span className="text-sm">BUY $AGENTX NOW</span>
-          </motion.button>
+            <motion.p
+              className="text-lg text-gray-300 text-center mb-4"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1 }}
+            >
+              100% Fair Launch - 90% of Supply Locked in Uniswap V2
+            </motion.p>
+
+            <motion.button
+              onClick={() => setShowSwapModal(true)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              className="px-12 py-4 rounded-xl bg-gradient-to-r from-red-600 to-red-800 text-xl font-bold shadow-lg shadow-red-500/20 flex flex-col items-center"
+            >
+              <span>BitcoinAI DEX</span>
+              <span className="text-sm">BUY $BTCAI NOW</span>
+            </motion.button>
+          </motion.div>
           <div className="flex space-x-4 mt-4">
-            <a href="https://X.com/AgentXAI_ETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://X.com/BitcoinAI_ETH" target="_blank" rel="noopener noreferrer">
               <img src="/x-logo.svg" alt="X" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
-            <a href="https://t.me/AgentXAIOnETH" target="_blank" rel="noopener noreferrer">
+            <a href="https://t.me/BitcoinAIOnETH" target="_blank" rel="noopener noreferrer">
               <img src="/telegram-logo.svg" alt="Telegram" className="w-8 h-8 rounded-full bg-dark-surface p-1.5" />
             </a>
           </div>
@@ -182,7 +194,8 @@ function LandingPage() {
         )}
       </AnimatePresence>
     </motion.div>
+    </>
   );
-}
+};
 
 export default LandingPage;

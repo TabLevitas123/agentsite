@@ -3,7 +3,6 @@ import { Web3ReactProvider } from '@web3-react/core';
 import { Web3Provider } from '@ethersproject/providers';
 import { ExternalProvider } from '@ethersproject/providers';
 import LandingPage from './components/LandingPage';
-import Complex3DLoader from './components/Complex3DLoader';
 import './App.css';
 
 function getLibrary(provider: ExternalProvider): Web3Provider {
